@@ -2,7 +2,7 @@
 Extension to open and navigate in PDF file
 
 
-This CHrome extension allows you to navigate through sentences using keystrokes (Tab/ Shift+Tab) inside of PDF file.
+This Chrome extension allows you to navigate through sentences using keystrokes (Tab/ Shift+Tab) inside of PDF file.
 
 How to install and use:
 
