@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PDF Sentence Navigator</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        height: 100vh;
+        font-family: sans-serif;
+        background: #323639;
+      }
+
+      #sidebar {
+        width: 280px;
+        background: #f8f9fa;
+        padding: 20px;
+        box-shadow: 3px 0 10px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        box-sizing: border-box;
+        border-right: 1px solid #dee2e6;
+      }
+      #sidebar h3 {
+        margin-top: 0;
+        color: #212529;
+        border-bottom: 2px solid #dee2e6;
+        padding-bottom: 10px;
+      }
+
+      #fileInput {
+        margin-bottom: 20px;
+        width: 100%;
+      }
+      .btn-group {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      .page-container {
+        position: relative;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        background: white;
+      }
+
+      /* .sentence-highlight {
+        background-color: rgba(225, 235, 59, 0.45) !important;
+        color: transparent !important;
+        border-radius: 2px;
+        display: inline;
+      } */
+      /* .textLayer .highlight {
+        background-color: rgba(225, 235, 59, 0.45) !important;
+        border-radius: 2px;
+        color: transparent !important;
+      } */
+      .highlight-overlay {
+        position: absolute;
+        background-color: rgba(225, 235, 59, 0.42) !important;
+        border-radius: 2px;
+        pointer-events: none;
+        z-index: 3;
+      }
+
+      .textLayer {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+        opacity: 1;
+        line-height: 1;
+        z-index: 2; /* Forces text to float on top of visual background canvas */
+        --scale-factor: 1.5; /* Matches script viewport zoom factor variables */
+        transform-origin: 0 0;
+        forced-color-adjust: none;
+      }
+
+      .textLayer .highlight.selected {
+        background-color: rgba(225, 152, 0, 0.5);
+      }
+      .textLayer span {
+        color: transparent;
+        position: absolute;
+        white-space: pre;
+        cursor: text;
+        transform-origin: 0% 0%;
+      }
+      .textLayer span.active-sentence {
+        background-color: rgba(225, 235, 59, 0.45) !important;
+        border-radius: 2px;
+        color: transparent !important;
+      }
+      mark {
+        background: none;
+        color: inherit;
+      }
+
+      .page-container #sidebar {
+        width: 250px;
+        background: #f4f4f4;
+        padding: 20px;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      }
+      #pdf-container {
+        flex: 1;
+        overflow-y: auto;
+        background: #525659;
+        padding: 23px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: #525659;
+      }
+      button {
+        flex: 1;
+        padding: 12px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      #prevBtn {
+        background-color: #6c757d;
+      }
+      #prevBtn:hover {
+        background-color: #545b62;
+      }
+      h4 {
+        margin: 10px 0 5px 0;
+        color: #495057;
+      }
+      #current-text {
+        flex: 1;
+        background: white;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: 12px;
+        overflow-y: auto;
+        font-size: 15px;
+        line-height: 1.5;
+        color: #333;
+        margin: 0;
+      }
+
+      .page-canvas {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="sidebar">
+      <h3>Navigation Panel</h3>
+      <input type="file" name="" id="fileInput" accept=".pdf" />
+      <div class="btn-group">
+        <button id="prevBtn">Previous Sentence</button>
+        <button id="nextBtn">Next Sentence</button>
+      </div>
+      <h4>Active Text:</h4>
+      <p id="current-text">Click Next to start reading...</p>
+    </div>
+
+    <div id="pdf-container"></div>
+
+    <script src="viewer.js" type="module"></script>
+  </body>
+</html>
